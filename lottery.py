@@ -1,6 +1,7 @@
 # coding=UTF-8
 from flask import Flask
 import random
+import json
 
 def geneRandomDistinctList(totalCount, minValue, maxValue):
     sourceList = []
@@ -30,8 +31,8 @@ def hello_world():
 @app.route('/lottery')
 def lottery():
     ls = geneDLT()
-    return ','.join(map(str, ls))
-
+    s = map(str, ls)
+    return json.dumps({'status' : 'success', 'lottery_list' : [s]})
 
 if __name__ == '__main__':
     app.run()
