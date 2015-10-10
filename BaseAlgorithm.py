@@ -14,3 +14,6 @@ def geneRandomDistinctList(totalCount, minValue, maxValue):
     sourceList.sort()
     return sourceList
 
+def geneRandomDistinctListExclude(exclude, totalCount, minValue, maxValue):
+
+

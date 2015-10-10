@@ -17,3 +17,7 @@ def random(count = 1):
         blueBalls = BaseAlgorithm.geneRandomDistinctList(SuperLottoBlueBallCount, SuperLottoBlueBallMinValue, SuperLottoBlueBallMaxValue)
         ls.append(redBalls + blueBalls)
     return ls
+
+#这里的blues等已经校验过，无需再次校验
+def recommend(preferBlues, preferReds, count = 1):
+    return random(count)
