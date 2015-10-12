@@ -4,8 +4,11 @@ __author__ = 'study_sun'
 import random
 
 def geneRandomDistinctList(totalCount, minValue, maxValue):
-    sourceList = []
-    while (len(sourceList) < totalCount) :
+    return geneRandomDistinctListExclude([], totalCount, minValue, maxValue)
+
+def geneRandomDistinctListExclude(exclude, totalCount, minValue, maxValue):
+    sourceList = list(exclude)
+    while (len(sourceList) < totalCount):
         while (1):
             r = random.choice(range(minValue,maxValue))
             if not (r in sourceList):
@@ -13,7 +16,4 @@ def geneRandomDistinctList(totalCount, minValue, maxValue):
                 break
     sourceList.sort()
     return sourceList
-
-def geneRandomDistinctListExclude(exclude, totalCount, minValue, maxValue):
-
 
