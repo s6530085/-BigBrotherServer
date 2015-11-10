@@ -6,3 +6,4 @@ def save()
 
 def get()
     print('get lottery history')
+

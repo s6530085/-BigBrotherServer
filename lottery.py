@@ -1,9 +1,9 @@
 # coding=UTF-8
 from flask import Flask,request
 import json
-from types import *
 import SuperLotto
 import WelfareLottery
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -29,7 +29,7 @@ def validateBalls(balls, type, isRed):
         try:
             a = int(balls[i])
             if a >= minValue and a <= maxValue:
-                if not validated.__contains__(a):
+                if not (a in validated):
                     validated.append(a)
         except ValueError:
             None
@@ -39,7 +39,7 @@ def validateBalls(balls, type, isRed):
     return validated
 
 
-def lotteryAlgorithm(type, algorithm, count, reds = [], blues = []):
+def lotteryAlgorithm(type, algorithm, count, reds = [], blues = [], ereds = [], eblues = []):
     if type == None:
         type = 'superlotto'
     else:
@@ -57,8 +57,8 @@ def lotteryAlgorithm(type, algorithm, count, reds = [], blues = []):
             count = int(count)
         except ValueError:
             count = 1
-        #最多不超过一百个
-        if count <= 0:
+        #最多不超过一百个，如果特地写0的话意思是随机来几注
+        if count < 0:
             count = 1
         elif count > 100:
             count = 100
@@ -71,21 +71,35 @@ def lotteryAlgorithm(type, algorithm, count, reds = [], blues = []):
         reds = []
     else:
         reds = reds.split(',')
+    if eblues == None:
+        eblues = []
+    else :
+        eblues = eblues.split(',')
+    if ereds == None:
+        ereds = []
+    else :
+        ereds = ereds.split(',')
 
     if algorithm == 'prefer':
         #目前所谓篮球红球的偏好只是非选他们不可而已，以后再来复式的算法
         #所以目前只取前几个元素而已，校验一下是否是数字,以及数字范围和数量
         blues = validateBalls(blues, type, False)
         reds = validateBalls(reds, type, True)
-    #目前只支持随机嘻嘻,所谓recommend都是假的
+        eblues = validateBalls(eblues, type, False)
+        ereds = validateBalls(ereds, type, True)
+        #还有可能就是偏好和排除有重复的，以排除的优先
+        blues = list(set(blues).difference(set(eblues)))
+        reds = list(set(reds).difference(set(ereds)))
+
+    #目前只支持随机嘻嘻,所谓prefer都是假的
     if type.lower() == 'welfarelottery':
         if algorithm.lower() == 'prefer':
-            return WelfareLottery.prefer(reds, blues, count)
+            return WelfareLottery.prefer(reds, blues, ereds, eblues, count)
         else:
             return WelfareLottery.random(count)
     else:
         if algorithm.lower() == 'prefer':
-            return SuperLotto.prefer(reds, blues, count)
+            return SuperLotto.prefer(reds, blues, ereds, eblues, count)
         else:
             return SuperLotto.random(count)
 
@@ -94,18 +108,21 @@ def lotteryAlgorithm(type, algorithm, count, reds = [], blues = []):
 def hello_world():
     return 'Hello Lottery'
 
+@app.route('/work')
+def it_works():
+    return 'It works!!!'
 
 @app.route('/lottery')
 def lottery():
-
     # 参数优先看 类型(大乐透|福彩)，其次看玩法(随机|真算)，最后看注数，默认值是大乐透，随机，一注
     type = request.args.get('type')
     algorithm = request.args.get('algorithm')
     count = request.args.get('count')
     reds = request.args.get('preferreds')
     blues = request.args.get('preferblues')
-    ls = lotteryAlgorithm(type, algorithm, count, reds, blues)
-
+    ereds = request.args.get('excludereds')
+    eblues = request.args.get('excludeblues')
+    ls = lotteryAlgorithm(type, algorithm, count, reds, blues, ereds, eblues)
     return json.dumps({'status' : 'success', 'lottery_list' : ls})
 
 

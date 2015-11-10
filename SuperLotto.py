@@ -19,10 +19,10 @@ def random(count = 1):
     return ls
 
 #这里的blues等已经校验过，无需再次校验
-def prefer(preferReds, preferBlues, count = 1):
+def prefer(preferReds, preferBlues, excludeReds, excludeBlues, count = 1):
     ls = []
     for i in range(0, count):
-        redBalls = BaseAlgorithm.geneRandomDistinctListExclude(preferReds, SuperLottoRedBallCount, SuperLottoRedBallMinValue, SuperLottoRedBallMaxValue)
-        blueBalls = BaseAlgorithm.geneRandomDistinctListExclude(preferBlues, SuperLottoBlueBallCount, SuperLottoBlueBallMinValue, SuperLottoBlueBallMaxValue)
+        redBalls = BaseAlgorithm.geneRandomDistinctListPrefer(preferReds, excludeReds, SuperLottoRedBallCount, SuperLottoRedBallMinValue, SuperLottoRedBallMaxValue)
+        blueBalls = BaseAlgorithm.geneRandomDistinctListPrefer(preferBlues, excludeBlues, SuperLottoBlueBallCount, SuperLottoBlueBallMinValue, SuperLottoBlueBallMaxValue)
         ls.append(redBalls + blueBalls)
     return ls
