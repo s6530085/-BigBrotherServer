@@ -24,7 +24,7 @@ def random(count = 1):
 def prefer(preferReds, preferBlues, excludeReds, excludeBlues, count = 1):
     ls = []
     for i in range(0, count):
-        redBalls = BaseAlgorithm.geneRandomDistinctListPrefer(preferReds, excludeReds, WelfareLotteryRedBallCount, WelfareLotteryRedBallMinValue, WelfareLotteryRedBallMaxValue)
-        blueBalls = BaseAlgorithm.geneRandomDistinctListPrefer(preferBlues, excludeBlues, WelfareLotteryBlueBallCount, WelfareLotteryBlueBallMinValue, WelfareLotteryBlueBallMaxValue)
+        redBalls = BaseAlgorithm.geneRandomDistinctListPreferAndExclude(preferReds, excludeReds, WelfareLotteryRedBallCount, WelfareLotteryRedBallMinValue, WelfareLotteryRedBallMaxValue)
+        blueBalls = BaseAlgorithm.geneRandomDistinctListPreferAndExclude(preferBlues, excludeBlues, WelfareLotteryBlueBallCount, WelfareLotteryBlueBallMinValue, WelfareLotteryBlueBallMaxValue)
         ls.append(redBalls + blueBalls)
     return ls

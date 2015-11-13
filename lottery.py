@@ -1,28 +1,40 @@
 # coding=UTF-8
-from flask import Flask,request
+from flask import Flask, request
 import json
+from functools import partial
 import SuperLotto
 import WelfareLottery
-from flask import Flask, request
 
 app = Flask(__name__)
 
-def validateBalls(balls, type, isRed):
+def validateBalls(balls, type, isRed, isPrefer):
     validated = []
     minValue = 1
     if type == 'superlotto':
         if isRed:
-            length = SuperLotto.SuperLottoRedBallCount
+            if isPrefer:
+                length = SuperLotto.SuperLottoRedBallCount
+            else:
+                length = SuperLotto.SuperLottoRedBallMaxValue - SuperLotto.SuperLottoRedBallCount
             maxValue = SuperLotto.SuperLottoRedBallMaxValue
         else:
-            length = SuperLotto.SuperLottoBlueBallCount
+            if isPrefer:
+                length = SuperLotto.SuperLottoBlueBallCount
+            else:
+                length = SuperLotto.SuperLottoBlueBallMaxValue - SuperLotto.SuperLottoBlueBallCount
             maxValue = SuperLotto.SuperLottoBlueBallMaxValue
     else:
         if isRed:
-            length = WelfareLottery.WelfareLotteryRedBallCount
+            if isPrefer:
+                length = WelfareLottery.WelfareLotteryRedBallCount
+            else:
+                length = WelfareLottery.WelfareLotteryRedBallMaxValue - WelfareLottery.WelfareLotteryRedBallCount
             maxValue = WelfareLottery.WelfareLotteryRedBallMaxValue
         else:
-            length = WelfareLottery.WelfareLotteryBlueBallCount
+            if isPrefer:
+                length = WelfareLottery.WelfareLotteryBlueBallCount
+            else :
+                length = WelfareLottery.WelfareLotteryBlueBallMaxValue - WelfareLottery.WelfareLotteryBlueBallCount
             maxValue = WelfareLottery.WelfareLotteryBlueBallMaxValue
 
     for i in range(0, len(balls)):
@@ -83,13 +95,15 @@ def lotteryAlgorithm(type, algorithm, count, reds = [], blues = [], ereds = [], 
     if algorithm == 'prefer':
         #目前所谓篮球红球的偏好只是非选他们不可而已，以后再来复式的算法
         #所以目前只取前几个元素而已，校验一下是否是数字,以及数字范围和数量
-        blues = validateBalls(blues, type, False)
-        reds = validateBalls(reds, type, True)
-        eblues = validateBalls(eblues, type, False)
-        ereds = validateBalls(ereds, type, True)
+        blues = validateBalls(blues, type, False, True)
+        reds = validateBalls(reds, type, True, True)
+        eblues = validateBalls(eblues, type, False, False)
+        ereds = validateBalls(ereds, type, True, False)
         #还有可能就是偏好和排除有重复的，以排除的优先
         blues = list(set(blues).difference(set(eblues)))
+        blues.sort()
         reds = list(set(reds).difference(set(ereds)))
+        reds.sort()
 
     #目前只支持随机嘻嘻,所谓prefer都是假的
     if type.lower() == 'welfarelottery':
