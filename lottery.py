@@ -4,6 +4,7 @@ import json
 from functools import partial
 import SuperLotto
 import WelfareLottery
+import PowerBall
 
 app = Flask(__name__)
 
@@ -51,7 +52,7 @@ def validateBalls(balls, type, isRed, isPrefer):
     return validated
 
 
-def lotteryAlgorithm(type, algorithm, count, reds = [], blues = [], ereds = [], eblues = []):
+def lotteryAlgorithm(type=None, algorithm=None, count=None, reds = None, blues = None, ereds = None, eblues = None):
     if type == None:
         type = 'superlotto'
     else:
@@ -106,7 +107,9 @@ def lotteryAlgorithm(type, algorithm, count, reds = [], blues = [], ereds = [], 
         reds.sort()
 
     #目前只支持随机嘻嘻,所谓prefer都是假的
-    if type.lower() == 'welfarelottery':
+    if type == 'powerball':
+        return PowerBall.random(count)
+    elif type == 'welfarelottery':
         if algorithm.lower() == 'prefer':
             return WelfareLottery.prefer(reds, blues, ereds, eblues, count)
         else:
@@ -125,6 +128,12 @@ def hello_world():
 @app.route('/work')
 def it_works():
     return 'It works!!!'
+
+# 为异国朋友增加强力球玩法
+@app.route('/powerball')
+def powerball():
+    ls = lotteryAlgorithm("powerball", 'random', '1')
+    return json.dumps(ls)
 
 @app.route('/lottery')
 def lottery():
