@@ -9,9 +9,9 @@ PowerBallRedBallCount = 5
 PowerBallBlueBallCount = 1
 PowerBallTotalBallCount = PowerBallRedBallCount + PowerBallBlueBallCount
 PowerBallRedBallMinValue = 1
-PowerBallRedBallMaxValue = 59
+PowerBallRedBallMaxValue = 69
 PowerBallBlueBallMinValue = 1
-PowerBallBlueBallMaxValue = 35
+PowerBallBlueBallMaxValue = 26
 
 def random(count = 1):
     ls = []

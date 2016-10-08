@@ -8,8 +8,15 @@ WelfareLotteryInitYear = '2003'
 #http://www.3dcp.cn/zs/gonggao.php?type=ssq&year=2009
 
 
+def __init__(self):
+    pass
+
+
 def grepSuperLotto():
     #我们假设，要么是根本没记录的，要么是没有最新的，不存在没有中间记录的可能
-    None
+    pass
 
-# def grep
+
+def grepWelfareLottery():
+    pass
+
