@@ -1,6 +1,6 @@
 # coding=UTF-8
-import BaseAlgorithm
-
+from algorithm import BaseAlgorithm
+from entity import *
 # const
 SuperLottoRedBallCount = 5
 SuperLottoBlueBallCount = 2
@@ -26,3 +26,13 @@ def prefer(preferReds, preferBlues, excludeReds, excludeBlues, count = 1):
         blueBalls = BaseAlgorithm.geneRandomDistinctListPreferAndExclude(preferBlues, excludeBlues, SuperLottoBlueBallCount, SuperLottoBlueBallMinValue, SuperLottoBlueBallMaxValue)
         ls.append(redBalls + blueBalls)
     return ls
+
+class SuperLotto(Lottery):
+
+    def __init__(self, raw=None):
+        super(Lottery, self).__init__()
+        if raw == None:
+            self.redBalls = []
+            self.blueBalls = []
+
+

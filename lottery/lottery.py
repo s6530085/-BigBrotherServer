@@ -1,10 +1,9 @@
 # coding=UTF-8
-from flask import Flask, request
 import json
-from functools import partial
+
 import SuperLotto
-import WelfareLottery
-import PowerBall
+from flask import Flask, request
+from lottery import PowerBall, WelfareLottery
 
 app = Flask(__name__)
 

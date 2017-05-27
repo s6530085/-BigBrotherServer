@@ -1,7 +1,9 @@
 # coding=UTF-8
 __author__ = 'study_sun'
 
-import BaseAlgorithm
+from algorithm import BaseAlgorithm
+from entity import *
+
 # const
 WelfareLotteryRedBallCount = 6
 WelfareLotteryBlueBallCount = 1
@@ -28,3 +30,11 @@ def prefer(preferReds, preferBlues, excludeReds, excludeBlues, count = 1):
         blueBalls = BaseAlgorithm.geneRandomDistinctListPreferAndExclude(preferBlues, excludeBlues, WelfareLotteryBlueBallCount, WelfareLotteryBlueBallMinValue, WelfareLotteryBlueBallMaxValue)
         ls.append(redBalls + blueBalls)
     return ls
+
+
+class WelfareLottery(Lottery):
+
+    def __init__(self):
+        super(Lottery, self).__init__()
+        self.redBalls = []
+        self.blueBalls = []

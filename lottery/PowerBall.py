@@ -1,7 +1,8 @@
 # coding=UTF-8
 __author__ = 'study_sun'
 
-import BaseAlgorithm
+from algorithm import BaseAlgorithm
+from entity import *
 
 # 其实是5个白球+1个篮球,懒得改了
 # const
@@ -29,3 +30,9 @@ def prefer(preferReds, preferBlues, excludeReds, excludeBlues, count = 1):
         blueBalls = BaseAlgorithm.geneRandomDistinctListPreferAndExclude(preferBlues, excludeBlues, PowerBallBlueBallCount, PowerBallBlueBallMinValue, PowerBallBlueBallMaxValue)
         ls.append(redBalls + blueBalls)
     return ls
+
+class PowerBall(Lottery):
+    def __init__(self):
+        super(Lottery, self).__init__()
+
+
