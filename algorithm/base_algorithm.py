@@ -27,9 +27,4 @@ class BaseAlgorithm():
         pass
 
 if __name__ == '__main__':
-    s = list()
-    s.append([1,2,3])
-    s.append([2,3,4])
-    a = [1,2]
-    a.append(3)
-    print s
+    s = [1,2,3,4]

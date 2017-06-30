@@ -32,9 +32,35 @@ def prefer(preferReds, preferBlues, excludeReds, excludeBlues, count = 1):
     return ls
 
 
-class WelfareLottery(Lottery):
 
-    def __init__(self):
-        super(Lottery, self).__init__()
-        self.redBalls = []
-        self.blueBalls = []
+class WelfareLottery(ColoredLottery):
+
+    @classmethod
+    def red_count(cls):
+        return WelfareLotteryRedBallCount
+
+    @classmethod
+    def max_red(cls):
+        return WelfareLotteryRedBallMaxValue
+
+    @classmethod
+    def blue_count(cls):
+        return WelfareLotteryBlueBallCount
+
+    @classmethod
+    def max_blue(cls):
+        return WelfareLotteryBlueBallMaxValue
+
+    @classmethod
+    def random(cls, count=1):
+        results = random(count)
+        # 港真,不太可能出现相同的两注吧,比中大奖概率还低
+        if count==1:
+            return results[0]
+        else:
+            return results
+
+
+class WelfareLotteryDraw(ColoredLotteryDraw):
+    pass
+

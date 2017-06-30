@@ -27,12 +27,34 @@ def prefer(preferReds, preferBlues, excludeReds, excludeBlues, count = 1):
         ls.append(redBalls + blueBalls)
     return ls
 
-class SuperLotto(Lottery):
 
-    def __init__(self, raw=None):
-        super(Lottery, self).__init__()
-        if raw == None:
-            self.redBalls = []
-            self.blueBalls = []
+class SuperLotto(ColoredLottery):
+
+    @classmethod
+    def red_count(cls):
+        return SuperLottoRedBallCount
+
+    @classmethod
+    def max_red(cls):
+        return SuperLottoRedBallMaxValue
+
+    @classmethod
+    def blue_count(cls):
+        return SuperLottoBlueBallCount
+
+    @classmethod
+    def max_blue(cls):
+        return SuperLottoBlueBallMaxValue
+
+    @classmethod
+    def random(cls, count=1):
+        results = random(count)
+        # 港真,不太可能出现相同的两注吧,比中大奖概率还低
+        if count==1:
+            return results[0]
+        else:
+            return results
 
 
+class SuperLottoDraw(ColoredLotteryDraw):
+    pass
