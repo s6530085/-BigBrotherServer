@@ -62,5 +62,6 @@ class WelfareLottery(ColoredLottery):
 
 
 class WelfareLotteryDraw(ColoredLotteryDraw):
+
     pass
 

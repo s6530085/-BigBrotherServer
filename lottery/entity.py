@@ -150,7 +150,16 @@ class ColoredLotteryDraw(LotteryDraw, ColoredLottery):
     def level(self, lottery):
         return self.rule.level(lottery)
 
+    # 说实话比较难算,暂且放着吧
     def winnings(self, lottery):
         return self.rule.winnings(lottery)
 
 
+    # 双色球和大乐透的数据存储是一样的,所以就通用了吧
+    def parse_sqlresult(self, sqlresult):
+        self[LotteryDraw.SERIAL_KEY] = sqlresult[0]
+        self[LotteryDraw.DATE_KEY] = sqlresult[1]
+        self[LotteryDraw.SALES_KEY] = sqlresult[2]
+        self[LotteryDraw.POND_KEY] = sqlresult[3]
+        self[ColoredLottery.RED_BALLS_KEY] = [int(i) for i in sqlresult[4].split(',')]
+        self[ColoredLottery.BLUE_BALLS_KEY] = [int(i) for i in sqlresult[5].split(',')]

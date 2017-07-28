@@ -57,4 +57,10 @@ class SuperLotto(ColoredLottery):
 
 
 class SuperLottoDraw(ColoredLotteryDraw):
+
     pass
+
+
+# class SuperLottoRule(object):
+#     @classmethod
+#     def

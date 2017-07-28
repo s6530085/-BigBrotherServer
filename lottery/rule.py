@@ -29,7 +29,6 @@ def lottery_level(lotteries, target, type=LotteryType.SuperLotto):
             # 纯list我是分不出到底是双色球还是大乐透的,只能看参数了
             i = 400
 
-
     return levels
 
 # 此时的参数都已经保证类型化了
